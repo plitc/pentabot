@@ -187,6 +187,32 @@ def ping6knot(self, mess, args):
 
 @botcmd
 @ignore_msg_from_self
+def hq_daniel(self, mess, args):
+    """
+    User availability
+    """
+    hq_daniel = ''
+    try:
+        hq_daniel += os.popen('/hq-check/daniel.sh').read()
+    except:
+        hq_daniel += 'Sorry Dude'
+    return ('Info:\n' + hq_daniel)
+
+@botcmd
+@ignore_msg_from_self
+def hq_vater(self, mess, args):
+    """
+    User availability
+    """
+    hq_vater = ''
+    try:
+        hq_vater += os.popen('/hq-check/vater.sh').read()
+    except:
+        hq_vater += 'Sorry Dude'
+    return ('Info:\n' + hq_vater)
+
+@botcmd
+@ignore_msg_from_self
 def randompassword(self, mess, args):
     """
     Ein Passwoertchen fuer die Welt
