@@ -398,6 +398,29 @@ def mensa(self, mess, args):
         message = 'Bitte rufe \"help mensa\" fuer moegliche Optionen auf!'
     return message
 
+@format_help
+@botcmd
+@ignore_msg_from_self
+def github(self, mess, args):
+    """
+    Gibt die aktuellen GitHub Aktivitäten wieder
+    Moegliche Eingaben:
+    {lastrss}
+    """
+    args = args.strip().split(' ')
+    if args[0] in dict(config.items('RSSGITHUB')).keys():
+        message = "\n"
+        if len(args) == 1:
+            args.append('1')
+        if int(args[1]) > int(config.get('RSSGITHUB', "maxfeedsgithub")):
+            args[1] = config.get('RSSGITHUB', "maxfeedsgithub")
+        for loop in range(int(args[1])):
+            f = feedparser.parse(config.get('RSSGITHUB', args[0])).get('entries')[loop]
+            message += 'Titel: ' + f.get('title') + '\n' + 'URL: ' + f.get('link') + '\n'
+    else:
+        message = 'Bitte rufe \"help github\" fuer moegliche Optionen auf!'
+    return message
+
 @botcmd
 @ignore_msg_from_self
 def elbe(self, mess, args):
