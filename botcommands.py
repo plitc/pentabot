@@ -349,6 +349,29 @@ def last(self, mess, args):
         message = 'Bitte rufe \"help last\" fuer moegliche Optionen auf!'
     return message
 
+@format_help  
+@botcmd
+@ignore_msg_from_self
+def mensa(self, mess, args):
+    """
+    Gibt die aktuellen Leckereien wieder
+    Moegliche Eingaben:
+    {lastrss}
+    """
+    args = args.strip().split(' ')
+    if args[0] in dict(config.items('RSSMENSA')).keys():
+        message = "\n"
+        if len(args) == 1:
+            args.append('1')
+        if int(args[1]) > int(config.get('RSSMENSA', "maxfeedsmensa")):
+            args[1] = config.get('RSSMENSA', "maxfeedsmensa")
+        for loop in range(int(args[1])):
+            f = feedparser.parse(config.get('RSSMENSA', args[0])).get('entries')[loop]
+            message += 'Titel: ' + f.get('title') + '\n' + 'URL: ' + f.get('link') + '\n'
+    else:
+        message = 'Bitte rufe \"help mensa\" fuer moegliche Optionen auf!'
+    return message
+
 @botcmd
 @ignore_msg_from_self
 def elbe(self, mess, args):
