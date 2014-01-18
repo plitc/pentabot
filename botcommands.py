@@ -382,7 +382,7 @@ def mensa(self, mess, args):
     """
     Gibt die aktuellen Leckereien wieder
     Moegliche Eingaben:
-    {lastrss}
+    {lastrssmensa}
     """
     args = args.strip().split(' ')
     if args[0] in dict(config.items('RSSMENSA')).keys():
@@ -393,6 +393,10 @@ def mensa(self, mess, args):
             args[1] = config.get('RSSMENSA', "maxfeedsmensa")
         for loop in range(int(args[1])):
             f = feedparser.parse(config.get('RSSMENSA', args[0])).get('entries')[loop]
+            message += 'Titel: ' + f.get('title') + '\n' + 'URL: ' + f.get('link') + '\n'
+            f = feedparser.parse(config.get('RSSMENSA', args[0])).get('entries')[1]
+            message += 'Titel: ' + f.get('title') + '\n' + 'URL: ' + f.get('link') + '\n'
+            f = feedparser.parse(config.get('RSSMENSA', args[0])).get('entries')[2]
             message += 'Titel: ' + f.get('title') + '\n' + 'URL: ' + f.get('link') + '\n'
     else:
         message = 'Bitte rufe \"help mensa\" fuer moegliche Optionen auf!'
@@ -405,7 +409,7 @@ def github(self, mess, args):
     """
     Gibt die aktuellen GitHub Aktivitäten wieder
     Moegliche Eingaben:
-    {lastrss}
+    {lastrssgithub}
     """
     args = args.strip().split(' ')
     if args[0] in dict(config.items('RSSGITHUB')).keys():
@@ -416,7 +420,7 @@ def github(self, mess, args):
             args[1] = config.get('RSSGITHUB', "maxfeedsgithub")
         for loop in range(int(args[1])):
             f = feedparser.parse(config.get('RSSGITHUB', args[0])).get('entries')[loop]
-            message += 'Titel: ' + f.get('title') + '\n' + 'URL: ' + f.get('link') + '\n'
+            message += 'Titel: ' + f.get('title') + '\n' + f.get('updated') + '\n' + 'URL: ' + f.get('link') + '\n'
     else:
         message = 'Bitte rufe \"help github\" fuer moegliche Optionen auf!'
     return message
