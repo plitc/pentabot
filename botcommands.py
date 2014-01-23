@@ -62,6 +62,14 @@ def thetime(self, mess, args):
 
 @botcmd
 @ignore_msg_from_self
+def time(self, mess, args):
+    """
+    Zeige die aktuelle Server Zeit
+    """
+    return str(datetime.datetime.now())
+
+@botcmd
+@ignore_msg_from_self
 def gentopic(self,mess,args):
     """
     Generiert einen Vorschlag für ein Gesprächsthema
@@ -193,7 +201,7 @@ def hq_daniel(self, mess, args):
     """
     hq_daniel = ''
     try:
-        hq_daniel += os.popen('/hq-check/daniel.sh').read()
+        hq_daniel += os.popen('/pentabot/shell/hq-check-daniel.sh').read()
     except:
         hq_daniel += 'Sorry Dude'
     return ('Info:\n' + hq_daniel)
@@ -206,7 +214,7 @@ def hq_vater(self, mess, args):
     """
     hq_vater = ''
     try:
-        hq_vater += os.popen('/hq-check/vater.sh').read()
+        hq_vater += os.popen('/pentabot/shell/hq-check-vater.sh').read()
     except:
         hq_vater += 'Sorry Dude'
     return ('Info:\n' + hq_vater)
@@ -232,7 +240,7 @@ def zufall100(self, mess, args):
     """
     zufall100 = ''
     try:
-        zufall100 += os.popen('/root/zufall_100.sh').read()
+        zufall100 += os.popen('/pentabot/shell/zufall_100.sh').read()
     except:
         zufall100 += 'Sorry Dude'
     return ('Zufall 1-100 sagt:\n' + zufall100)
@@ -598,3 +606,86 @@ def hq(self, mess, args):
     else:
         message += "Probier es noch mal mit einer der folgenden Optionen: status, sensors, coords, contact, web oder feeds."
     return message
+
+### ### ### PLITC ### ### ###
+
+@botcmd
+@ignore_msg_from_self
+def serverprozesse(self, mess, args):
+    """
+    Zeige Informationen ueber den Server
+    """
+    serverprozesse = ''
+    try:
+        serverprozesse += os.popen('/bin/ps -xuvwc').read()
+    except:
+        serverprozesse += 'Sorry Dude'
+    return ('Info:\n' + serverprozesse)
+
+@botcmd
+@ignore_msg_from_self
+def serverlastlogin(self, mess, args):
+    """
+    Zeige Informationen ueber den Server
+    """
+    serverlastlogin = ''
+    try:
+        serverlastlogin += os.popen("/usr/bin/last -n 3 | /usr/bin/awk '{print $1,$2,$4,$5,$6,$7,$8,$9,$10}'").read()
+    except:
+        serverlastlogin += 'Sorry Dude'
+    return ('Info:\n' + serverlastlogin)
+
+@botcmd
+@ignore_msg_from_self
+def serversshauth(self, mess, args):
+    """
+    Zeige Informationen ueber den Server
+    """
+    serversshauth = ''
+    try:
+        serversshauth += os.popen('/usr/bin/grep "error" /var/log/auth.log').read()
+    except:
+        serversshauth += 'Sorry Dude'
+    return ('Info:\n' + serversshauth)
+
+@botcmd
+@ignore_msg_from_self
+def servernetstat(self, mess, args):
+    """
+    Zeige Informationen ueber den Server
+    """
+    servernetstat = ''
+    try:
+        servernetstat += os.popen("netstat -f inet6 | /usr/bin/awk '{print $1,$2,$3,$4,$6}'").read()
+    except:
+        servernetstat += 'Sorry Dude'
+    return ('Info:\n' + servernetstat)
+
+@botcmd
+@ignore_msg_from_self
+def serversockstat(self, mess, args):
+    """
+    Zeige Informationen ueber den Server
+    """
+    serversockstat = ''
+    try:
+        serversockstat += os.popen("sockstat -6 | /usr/bin/awk '{print $1,$2,$5}'").read()
+    except:
+        serversockstat += 'Sorry Dude'
+    return ('Info:\n' + serversockstat)
+
+@botcmd
+@ignore_msg_from_self
+def serverportsupdates(self, mess, args):
+    """
+    Zeige Informationen ueber den Server
+    """
+    serverportsupdates = ''
+    try:
+        serverportsupdates += os.popen('/usr/sbin/pkg_version -l "<"').read()
+    except:
+        serverportsupdates += 'Sorry Dude'
+    return ('Info:\n' + serverportsupdates)
+
+### ### ### PLITC ### ### ###
+# EOF
