@@ -1,0 +1,162 @@
+apr-1.4.8.1.5.3     Apache Portability Library
+asciidoc-8.6.9_2    Text document format for writing short documents and man pa
+autoconf-2.69       Automatically configure source code on many Un*x platforms
+autoconf-wrapper-20131203 Wrapper script for GNU autoconf
+automake-1.14       GNU Standards-compliant Makefile generator
+automake-wrapper-20131203 Wrapper script for GNU automake
+bash-4.2.45_1       The GNU Project's Bourne Again SHell
+bdftopcf-1.0.4      Convert X font from BDF to PCF
+bigreqsproto-1.1.2  BigReqs extension headers
+bison-2.7.1,1       A parser generator from FSF, (mostly) compatible with Yacc
+boehm-gc-7.2e       Garbage collection and memory leak detection for C and C++
+ca_root_nss-3.15.3.1 The root certificate bundle from the Mozilla Project
+cairo-1.10.2_7,2    Vector graphics library with cross-device output support
+cmake-2.8.12.1      Cross-platform Makefile generator
+cmake-modules-2.8.12.1_1 Modules and Templates for CMake
+collectd-4.10.9_4   Systems & network statistics collection daemon
+cowsay-3.03_1       Configurable talking characters in ASCII art
+curl-7.33.0_2       Non-interactive tool to get files from FTP, GOPHER, HTTP(S)
+cvsps-2.1_1         Create patchset information from CVS
+db42-4.2.52_5       The Berkeley DB package, revision 4.2
+ddate-2.22.2,1      Command to print the date in Discordian date format
+dejavu-2.34         Bitstream Vera Fonts clone with a wider range of characters
+dialog4ports-0.1.5_2 Console Interface to configure ports
+docbook-1.4_1       Meta-port for the different versions of the DocBook DTD
+docbook-4.1_4       V4.1 of the DocBook DTD, designed for technical documentati
+docbook-4.2         V4.2 of the DocBook DTD, designed for technical documentati
+docbook-4.3         DocBook/SGML DTD V4.3, designed for technical documentation
+docbook-4.4_2       DocBook/SGML DTD V4.4, designed for technical documentation
+docbook-4.5_2       DocBook/SGML DTD V4.5, designed for technical documentation
+docbook-5.0_1       DocBook 5.0, designed for technical documentation
+docbook-sk-4.1.2_4  XML version of the DocBook DTD version controlled for Scrol
+docbook-xml-4.2_1   XML version of the DocBook DTD
+docbook-xml-4.3     DocBook/XML DTD V4.3, designed for technical documentation
+docbook-xml-4.4_1   DocBook/XML DTD V4.4, designed for technical documentation
+docbook-xml-4.5     DocBook/XML DTD V4.5, designed for technical documentation
+docbook-xsl-1.76.1_1 XSL DocBook stylesheets
+encodings-1.0.4_1,1 X.Org Encoding fonts
+expat-2.1.0         XML 1.0 parser written in C
+fbopenssl-0.0.4     GSS-API and SPNEGO extensions for OpenSSL
+fish-2.0.0          User friendly command line shell
+font-bh-ttf-1.0.3_1 X.Org Bigelow & Holmes TTF font
+font-misc-ethiopic-1.0.3_1 X.Org miscellaneous Ethiopic font
+font-misc-meltho-1.0.3_1 X.Org miscellaneous Meltho font
+font-util-1.3.0_1   Create an index of X font files in a directory
+fontconfig-2.11.0_1,1 XML-based font configuration API for X Windows
+fontsproto-2.1.2    Fonts extension headers
+freetype2-2.5.2     Free and portable TrueType font rendering engine
+gdbm-1.11           GNU database manager
+getopt-1.1.5        Replacement for getopt(1) that supports GNU-style long opti
+gettext-0.18.3.1    GNU gettext package
+git-1.8.5.2         Distributed source code management tool
+glib-2.36.3_1       Some useful routines of C programming (current stable versi
+gmake-3.82_1        GNU version of 'make' utility
+gmp-5.1.3           A free library for arbitrary precision arithmetic
+gnomehier-3.0       A utility port that creates the GNOME directory tree
+gnutls-2.12.23_3    GNU Transport Layer Security library
+gobject-introspection-1.36.0_2 Generate interface introspection data for GObject libraries
+graphite2-1.2.4     Rendering capabilities for complex non-Roman writing system
+harfbuzz-0.9.25     OpenType text shaping engine
+help2man-1.43.3_1   Automatically generating simple manual pages from program o
+icu-50.1.2          International Components for Unicode (from IBM)
+inputproto-2.3      Input extension headers
+intltool-0.50.2     Tools to internationalize various kinds of data files
+iso8879-1986_3      Character entity sets from ISO 8879:1986 (SGML)
+json-c-0.11         JSON (JavaScript Object Notation) implementation in C
+kbproto-1.0.6       KB extension headers
+libX11-1.6.2,1      X11 library
+libXau-1.0.8        Authentication Protocol library for X11
+libXdmcp-1.1.1      X Display Manager Control Protocol library
+libXfont-1.4.7,1    X font library
+libXft-2.3.1        Client-sided font API for X applications
+libXrender-0.9.8    X Render extension library
+libcheck-0.9.11     Unit test framework for C
+libee-0.4.1         An event expression library inspired by CEE
+libestr-0.1.8       Library for some string essentials
+libevent-1.4.14b_2  Provides an API to execute callback functions on certain ev
+libexecinfo-1.1_3   A library for inspecting program's backtrace
+libffi-3.0.13_1     Foreign Function Interface
+libfontenc-1.1.2    The fontenc Library
+libgcrypt-1.5.3     General purpose crypto library based on code used in GnuPG
+libgpg-error-1.12   Common error values for all GnuPG components
+libiconv-1.14_1     A character set conversion library
+liblogging-0.7.1    Easy to use system logging library
+libltdl-2.4.2_2     System independent dlopen wrapper
+liboping-0.3.5      C library to generate ICMP echo requests
+libpaper-1.1.24_1   A library providing routines for paper size management
+libpthread-stubs-0.3_4 This library provides weak aliases for pthread functions
+libstatgrab-0.17    Provides a useful interface to system statistics
+libtasn1-3.3        ASN.1 structure parser library
+libtool-2.4.2_2     Generic shared library support script
+libxcb-1.9.3        The X protocol C-language Binding (XCB) library
+libxml2-2.8.0_3     XML parser library for GNOME
+libxslt-1.1.28_1    The XSLT C library for GNOME
+libyaml-0.1.4_2     A YAML 1.1 parser and emitter written in C
+m4-1.4.17,1         GNU m4
+mkfontdir-1.0.7     Create an index of X font files in a directory
+mkfontscale-1.1.1   Creates an index of scalable font files for X
+mysql55-client-5.5.35 Multithreaded SQL database (client)
+net-snmp-5.7.2_3    An extendable SNMP implementation
+nettle-2.7.1        Low-level cryptographic library
+p11-kit-0.20.1      Library for loading and enumerating of PKCS#11 modules
+p5-Error-0.17021    Perl module to provide Error/exception support for perl: Er
+p5-IO-Socket-IP-0.24 Drop-in replacement for IO::Socket::INET supporting IPv4 an
+p5-IO-Socket-SSL-1.962 Perl5 interface to SSL sockets
+p5-Locale-gettext-1.05_3 Message handling functions
+p5-Net-SMTP-SSL-1.01_1 SMTP client supporting SSL
+p5-Net-SSLeay-1.55  Perl5 interface to SSL
+p5-Socket-2.013     Networking constants and support functions
+p5-Term-ReadKey-2.31 A perl5 module for simple terminal control
+p5-XML-Parser-2.41_1 Perl extension interface to James Clark's XML parser, expat
+p5-subversion-1.8.5 Perl bindings for Version control system
+pango-1.34.1_1      An open-source framework for the layout and rendering of i1
+pcre-8.33           Perl Compatible Regular Expressions library
+perl5.14-5.14.4_4   Practical Extraction and Report Language
+pixman-0.32.4       Low-level pixel manipulation library
+pkgconf-0.9.4       Utility to help to configure compiler and linker flags
+png-1.5.17          Library for manipulating PNG images
+portupgrade-2.4.12,2 FreeBSD ports/packages administration and management tool s
+postgresql90-client-9.0.15 PostgreSQL database (client)
+py27-asn1-0.1.4,1   ASN.1 toolkit for Python
+py27-chardet-2.2.1  Character encoding auto-detection in Python
+py27-dnspython-1.11.1 DNS toolkit for Python
+py27-feedparser-5.1.3 RSS feed parser written in Python
+py27-jabberbot-0.15 A simple Jabber Bot for Python
+py27-ndg_httpsclient-0.3.2 Enhance HTTPS support for httplib and urllib2
+py27-openssl-0.13   Python interface to the OpenSSL library
+py27-pip-1.4.1      Pip installs (Python) packages. An easy_install replacement
+py27-pycrypto-2.6.1 The Python Cryptography Toolkit
+py27-requests-1.2.3 HTTP library written in Python for human beings
+py27-setuptools-2.0.1 Python packages installer
+py27-urllib3-1.7.1  Enhance HTTP Python's standard library
+py27-xmpppy-0.5.0_2 A Python library that provides easy scripting with Jabber
+python-2.7_1,2      The "meta-port" for the default version of Python interpret
+python2-2_2         The "meta-port" for version 2 of the Python interpreter
+python27-2.7.6_1    Interpreted object-oriented programming language
+renderproto-0.11.1  RenderProto protocol headers
+rrdtool-1.4.8       Round Robin Database Tools
+rsyslog-7.4.7       Syslogd supporting SQL, TCP, and TLS
+ruby-1.9.3.484,1    An object-oriented interpreted scripting language
+ruby19-bdb-0.6.6_3  Ruby interface to Oracle Berkeley DB revision 2 or later
+scons-2.3.0         Build tool alternative to make
+serf-1.3.2_1        Serf HTTP client library
+sqlite3-3.8.2       SQL database engine in a C library
+ssmtp-2.64          Extremely simple MTA to get mail off the system to a mail h
+subversion-1.8.5    Version control system
+tmux-1.8_1          A Terminal Multiplexer
+unzip-6.0_1         List, test, and extract compressed files in a ZIP archive
+w3m-0.5.3_2         A pager/text-based WWW browser
+xcb-proto-1.9       The X protocol C-language Binding (XCB) protocol
+xcb-util-0.3.9_1,1  A module with libxcb/libX11 extension/replacement libraries
+xcb-util-renderutil-0.3.8 Convenience functions for the Render extension
+xcmiscproto-1.2.2   XCMisc extension headers
+xextproto-7.2.1     XExt extension headers
+xf86bigfontproto-1.2.0 XFree86-Bigfont extension headers
+xmlcatmgr-2.2       SGML and XML catalog manager
+xmlcharent-0.3_2    XML character entities
+xmlto-0.0.25_2      Front-end to an XSL toolchain
+xorg-fonts-truetype-7.7_1 X.Org TrueType fonts
+xorg-macros-1.18.0  X.Org development aclocal macros
+xproto-7.0.25       X11 protocol headers
+xtrans-1.3.2        Abstract network code for X
+zsh-5.0.5           The Z shell
