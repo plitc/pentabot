@@ -62,14 +62,6 @@ def thetime(self, mess, args):
 
 @botcmd
 @ignore_msg_from_self
-def time(self, mess, args):
-    """
-    Zeige die aktuelle Server Zeit
-    """
-    return str(datetime.datetime.now())
-
-@botcmd
-@ignore_msg_from_self
 def gentopic(self,mess,args):
     """
     Generiert einen Vorschlag für ein Gesprächsthema
@@ -686,6 +678,33 @@ def serverportsupdates(self, mess, args):
     except:
         serverportsupdates += 'Sorry Dude'
     return ('Info:\n' + serverportsupdates)
+
+@botcmd
+@ignore_msg_from_self
+def serverportsupgrade(self, mess, args):
+    """
+    Server - Ports Upgrade! ... take a deep breath ...
+    """
+    serverportsupgrade = ''
+    try:
+        serverportsupgrade += os.popen('/pentabot/shell/jail_update.csh > /pentabot/shell/jail_update.log 2>&1').read()
+        serverportsupgrade += os.popen('/bin/cat /pentabot/shell/jail_update.log').read()
+    except:
+        serverportsupgrade += 'Sorry Dude'
+    return ('Info:\n' + serverportsupgrade)
+
+@botcmd
+@ignore_msg_from_self
+def lebst_du(self, mess, args):  
+    """
+    :D
+    """
+    lebst_du = ''
+    try:
+        lebst_du += os.popen('echo "Ja, Schöpfer"').read()
+    except:
+        lebst_du += 'Sorry Dude'
+    return ('Info:\n' + lebst_du)
 
 ### ### ### PLITC ### ### ###
 # EOF
