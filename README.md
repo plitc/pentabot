@@ -3,6 +3,7 @@ Background
 ==========
 * pentabot
 
+```bash
 a stylish xmpp-based bot serving pentamedia with your data and pentamedia data for you.
 
 First of all, it shall be able to receive news for our monthly pentaradio show (supposed format: "!add <url> <your text> <#yourtag>").
@@ -19,6 +20,7 @@ Hopefully this will be done by the end of the weekend.
 The bot will be (hopefully) available soon, just make friends with pentabot@hq.c3d2.de
 
 For comments (either mail or xmpp): koeart <at - remove this> zwoelfelf <dot - this too> net.
+```
 
 Dependencies
 ============
@@ -28,11 +30,13 @@ Dependencies
 
 install PentaBot on FreeBSD inside Jail
 =======================================
-* pkg install net-im/py-jabberbot
-* pkg install textproc/py-feedparser
-* pkg install devel/git
-* pkg install devel/py-pip
-* pip install requests
+```bash
+pkg install net-im/py-jabberbot
+pkg install textproc/py-feedparser
+pkg install devel/git
+pkg install devel/py-pip
+pip install requests
+```
 
 FreeBSD Jail RCTL example
 =========================
