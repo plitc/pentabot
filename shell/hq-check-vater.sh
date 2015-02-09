@@ -1,7 +1,7 @@
 #!/bin/sh
 
 ### ### ### PLITC ### ### ###
-/sbin/ping6 -q -c5 zzz > /dev/null
+/sbin/ping6 -q -c5 vater.space.c3d2.de > /dev/null
 
 if [ $? -eq 0 ];
 then

@@ -100,7 +100,7 @@ def serverinfo(self, mess, args):
     """
     serverinfo = ''
     try:
-        serverinfo += os.popen('/usr/bin/uname -m -r -s -o').read()
+        serverinfo += os.popen('/usr/bin/uname -i -m -r -s -o -n').read()
         serverinfo += os.popen('/usr/bin/uptime').read()
         serverinfo += os.popen('/usr/bin/top | /usr/bin/grep "Mem"').read()
     except:
@@ -132,6 +132,19 @@ def ping6flatbert(self, mess, args):
     except:
         ping6flatbert += 'Sorry Dude'
     return ('Info:\n' + ping6flatbert)
+
+@botcmd
+@ignore_msg_from_self
+def ping6flatberthost(self, mess, args):
+    """
+    Zeige Informationen ueber den Server - flatberthost.hq.c3d2.de
+    """
+    ping6flatberthost = ''
+    try:
+        ping6flatberthost += os.popen('/sbin/ping6 -c4 flatberthost.hq.c3d2.de  | /usr/bin/tail -2').read()
+    except:
+        ping6flatberthost += 'Sorry Dude'
+    return ('Info:\n' + ping6flatberthost)
 
 @botcmd
 @ignore_msg_from_self
@@ -193,10 +206,23 @@ def hq_daniel(self, mess, args):
     """
     hq_daniel = ''
     try:
-        hq_daniel += os.popen('/pentabot/shell/hq-check-daniel.sh').read()
+        hq_daniel += os.popen('/home/freebot/pentabot/shell/hq-check-daniel.sh').read()
     except:
         hq_daniel += 'Sorry Dude'
     return ('Info:\n' + hq_daniel)
+
+@botcmd
+@ignore_msg_from_self
+def flatbert(self, mess, args):
+    """
+    Server Test
+    """
+    flatbert = ''   
+    try:
+        flatbert += os.popen('/home/freebot/pentabot/shell/hq-check-flatbert.sh').read()
+    except:
+        flatbert += 'Sorry Dude'
+    return ('Info:\n' + flatbert)
 
 @botcmd
 @ignore_msg_from_self
@@ -206,7 +232,7 @@ def hq_vater(self, mess, args):
     """
     hq_vater = ''
     try:
-        hq_vater += os.popen('/pentabot/shell/hq-check-vater.sh').read()
+        hq_vater += os.popen('/home/freebot/pentabot/shell/hq-check-vater.sh').read()
     except:
         hq_vater += 'Sorry Dude'
     return ('Info:\n' + hq_vater)
@@ -232,7 +258,7 @@ def zufall100(self, mess, args):
     """
     zufall100 = ''
     try:
-        zufall100 += os.popen('/pentabot/shell/zufall_100.sh').read()
+        zufall100 += os.popen('/home/freebot/pentabot/shell/zufall_100.sh').read()
     except:
         zufall100 += 'Sorry Dude'
     return ('Zufall 1-100 sagt:\n' + zufall100)
@@ -328,7 +354,7 @@ def cowfortune(self, mess, args):
     """
     cowfortune = ''
     try:
-        cowfortune += os.popen('/basejail/usr/games/fortune /usr/share/games/fortune/000 | /usr/local/bin/cowsay').read()
+        cowfortune += os.popen('/usr/games/fortune /usr/share/games/fortune/fortune | /usr/local/bin/cowsay').read()
     except:
         cowfortune += 'Your cowfortune unforseeable'
     return ('Your Cookie reads:\n' + cowfortune)
@@ -528,13 +554,13 @@ def hq(self, mess, args):
     feeds_help_msg = "        blog         Zeigt dir die C3D2-Mews-Feed-URL an\n"
     feeds_help_msg += "        wiki          Zeigt dir die C3D2-Wiki-Feed-URL an\n"
     feeds_help_msg += "        calendar   Zeigt dir die C3D2-Kalender-Feed-URL an\n"
-    sensors_help_msg = "       pi         Zeigt die Temperatur von " + content.get("sensors").get("temperature")[0].get("name") + "\n"
+#    sensors_help_msg = "       pi         Zeigt die Temperatur von " + content.get("sensors").get("temperature")[0].get("name") + "\n"
     help_msg = "Benutze: hq <option> (<option>)\n"
     help_msg += "Optionen:\n"
     help_msg += "    status          Zeigt dir den Status (offen/zu) vom HQ\n"
     help_msg += "    coords          Zeigt dir die Koordinaten des HQ\n"
     help_msg += "    sensors         Zeigt die Werte der Sensoren im HQ\n"
-    help_msg += sensors_help_msg
+#    help_msg += sensors_help_msg
     help_msg += "    contact         Zeigt dir Kontakt Daten zum HQ\n"
     help_msg += contact_help_msg
     help_msg += "    web             Zeigt dir den Link zu unserer Webseite\n"
@@ -546,8 +572,10 @@ def hq(self, mess, args):
     if not args[0]:
         message = help_msg
     elif args[0] == "status":
-        message += content.get("state").get("message")
-        message += "   " + "UTC/GMT+1" + "   "  + str(datetime.datetime.now())
+#        message += content.get("state").get("message")
+#        message += "   " + "UTC/GMT+1" + "   "  + str(datetime.datetime.now())
+#        message += content.get("state").get("message") + "            " + "LASTCHANGE" + "   "  +str(content.get("state").get("lastchange"))
+         message += content.get("state").get("message") + "            " + "LASTCHANGE" + "   "  +datetime.datetime.fromtimestamp(int(content.get("state").get("lastchange"))).strftime('%Y-%m-%d %H:%M:%S')
     elif args[0] == "coords":
         message += "Das HQ findest du auf %s ."%(_stroflatlog_de(content.get("location").get("lat") , content.get("location").get("lon")))
     elif args[0] == "web":
@@ -648,7 +676,8 @@ def servernetstat(self, mess, args):
     """
     servernetstat = ''
     try:
-        servernetstat += os.popen("netstat -f inet6 | /usr/bin/awk '{print $1,$2,$3,$4,$6}'").read()
+        #servernetstat += os.popen("netstat -f inet6 | /usr/bin/awk '{print $1,$2,$3,$4,$6}'").read()
+        servernetstat += os.popen("netstat -rni").read()
     except:
         servernetstat += 'Sorry Dude'
     return ('Info:\n' + servernetstat)
@@ -668,30 +697,62 @@ def serversockstat(self, mess, args):
 
 @botcmd
 @ignore_msg_from_self
-def serverportsupdates(self, mess, args):
+def serverportupdate(self, mess, args):
     """
-    Zeige Informationen ueber den Server
+    Server - Port Update! ... take a deep breath ...
     """
-    serverportsupdates = ''
+    serverportupdate = ''
     try:
-        serverportsupdates += os.popen('/usr/sbin/pkg_version -l "<"').read()
+        serverportupdate += os.popen('echo "... take a deep breath ..."').read()
+        serverportupdate += os.popen('/usr/sbin/pkg_version -l "<" > /home/freebot/pentabot/shell/jail_update.log 2>&1').read()
+        serverportupdate += os.popen('/bin/cat /home/freebot/pentabot/shell/jail_update.log').read()
     except:
-        serverportsupdates += 'Sorry Dude'
-    return ('Info:\n' + serverportsupdates)
+        serverportupdate += 'Sorry Dude'
+    return ('Info:\n' + serverportupdate)
 
 @botcmd
 @ignore_msg_from_self
-def serverportsupgrade(self, mess, args):
+def serverpkgaudit(self, mess, args):
     """
-    Server - Ports Upgrade! ... take a deep breath ...
+    Server - PKG Audit -F! ... take a deep breath ...
     """
-    serverportsupgrade = ''
+    serverpkgaudit = ''
     try:
-        serverportsupgrade += os.popen('/pentabot/shell/jail_update.csh > /pentabot/shell/jail_update.log 2>&1').read()
-        serverportsupgrade += os.popen('/bin/cat /pentabot/shell/jail_update.log').read()
+        serverpkgaudit += os.popen('echo "... take a deep breath ..."').read()
+        serverpkgaudit += os.popen('/home/freebot/pentabot/shell/jail_pkg_audit.csh > /home/freebot/pentabot/shell/jail_pkg_audit.log 2>&1').read()
+        serverpkgaudit += os.popen('/bin/cat /home/freebot/pentabot/shell/jail_pkg_audit.log').read()
     except:
-        serverportsupgrade += 'Sorry Dude'
-    return ('Info:\n' + serverportsupgrade)
+        serverpkgaudit += 'Sorry Dude'
+    return ('Info:\n' + serverpkgaudit)
+
+@botcmd
+@ignore_msg_from_self
+def serverportupgrade(self, mess, args):
+    """
+    Server - Port Upgrade! ... take a deep breath ...
+    """
+    serverportupgrade = ''
+    try:
+        serverportupgrade += os.popen('echo "... take a deep breath ..."').read()
+        serverportupgrade += os.popen('/home/freebot/pentabot/shell/jail_update.csh > /home/freebot/pentabot/shell/jail_upgrade.log 2>&1').read()
+        serverportupgrade += os.popen('/usr/bin/tail -n15 /home/freebot/pentabot/shell/jail_upgrade.log').read()
+    except:
+        serverportupgrade += 'Sorry Dude'
+    return ('Info:\n' + serverportupgrade)
+
+@botcmd
+@ignore_msg_from_self
+def serverportupgradelog(self, mess, args):
+    """
+    Server - Port Upgrade Log ... take a deep breath ...
+    """
+    serverportupgradelog = ''
+    try:
+        serverportupgradelog += os.popen('echo "... take a deep breath ..."').read()
+        serverportupgradelog += os.popen('/usr/bin/tail -n15 /home/freebot/pentabot/shell/jail_upgrade.log').read()
+    except:
+        serverportupgradelog += 'Sorry Dude'
+    return ('Info:\n' + serverportupgradelog)
 
 @botcmd
 @ignore_msg_from_self
@@ -705,6 +766,36 @@ def lebst_du(self, mess, args):
     except:
         lebst_du += 'Sorry Dude'
     return ('Info:\n' + lebst_du)
+
+@botcmd
+@ignore_msg_from_self
+def cloudstorage(self, mess, args):
+    """
+    :D
+    """
+    cloudstorage = ''
+    try:
+#        cloudstorage += os.popen("echo 'Ihnen stehen noch $(df -m | awk '{print $2}' | tail -1) Speicher im Utha NSA-Rechenzentrum zur Verfügung'").read()
+        cloudstorage += os.popen("echo 'Ihnen stehen noch 10 TB Speicher im Utha NSA-Rechenzentrum zur Verfügung'").read()
+         
+    except:
+        cloudstorage += 'Sorry Dude'
+    return ('Info:\n' + cloudstorage)
+
+### ### ###
+
+@botcmd
+@ignore_msg_from_self
+def test_spaceapi(self, mess, args):
+    """
+    SpaceAPI WebServer Test
+    """
+    test_spaceapi = ''
+    try:
+        test_spaceapi += os.popen("/usr/local/bin/curl -m3 -I http://www.hq.c3d2.de/spaceapi.json 2>&1 | grep 'HTTP/'").read()
+    except:
+        test_spaceapi += 'Sorry Dude'
+    return ('Info:\n' + test_spaceapi)
 
 ### ### ### PLITC ### ### ###
 # EOF
