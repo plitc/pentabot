@@ -36,6 +36,7 @@ install PentaBot on FreeBSD inside Jail
 
 FreeBSD Jail RCTL example
 =========================
+```bash
 cat /etc/rctl.conf 
 
 ### pentabot // ###
@@ -58,4 +59,5 @@ jail:pentabot:maxproc:deny=1024
 jail:pentabot:openfiles:log=25000
 jail:pentabot:openfiles:deny=30000
 ### // pentabot ###
+```
 
