@@ -12,6 +12,8 @@ import logging
 
 import socket
 import subprocess
+import fcntl
+import errno
 
 from decorators import ignore_msg_from_self
 from pentabot import feed_help, config
@@ -24,8 +26,10 @@ IS_PYTHON2 = sys.version_info < (3, 0)
 
 if IS_PYTHON2:
     QUIT_CMD = '{"command": ["quit"]}\n'
+    MEDIA_TITLE = '{"command": ["get_property_string", "media-title"]}\n'
 else:
     QUIT_CMD = b'{"command": ["quit"]}\n'
+    MEDIA_TITLE = b'{"command": ["get_property_string", "media-title"]}\n'
 
 class Mpv:
     def __init__(self, host):
@@ -40,11 +44,40 @@ class Mpv:
                 "--input-unix-socket="+self.socket_path,
                 "--", uri]
         self.child = subprocess.Popen(cmd)
+    def connect(self):
+        client = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+        client.connect(self.socket_path)
+        fcntl.fcntl(client, fcntl.F_SETFL, os.O_NONBLOCK)
+        return client
+    def flush_socket(self, sock):
+        try:
+            sock.recv(4096)
+        except socket.error as e:
+            if e != errno.EAGAIN or e != errno.EWOULDBLOCK:
+                return "Connection failed while retrieving current song: %s" % e
+    def media_title(self):
+        if os.path.exists(self.socket_path):
+            try:
+                client = self.connect()
+                self.flush_socket(client) # flush events
+                client.send(MEDIA_TITLE)
+                f = client.makefile("r")
+                line = f.readline()
+            except socket.error as e:
+                return "Connection failed while retrieving current song: %s" % e
+            try:
+                response = json.loads(line)
+                title = response.get("data", "N/A")
+                return "current song: %s" % title
+            except ValueError as e:
+                return "failed to parse response of mpv: %s" % e
+        else:
+            return "no mpv running"
     def stop(self):
         if os.path.exists(self.socket_path):
             client = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
             try:
-                client.connect(self.socket_path)
+                client = self.connect()
                 client.send(QUIT_CMD)
                 client.close()
                 if self.child != None:
@@ -82,17 +115,19 @@ def zaubert_stop(self, mess, args):
 
 @botcmd
 @ignore_msg_from_self
-def playlist(self, mess, args):
+def cider_playlist(self, args):
     """
     show current bot mpv playlist
     """
-    playlist = ''
-    try:
-        playlist += os.popen('/home/pentabot/shell/mpv_current.sh').read()
-        playlist += os.popen('/bin/cat /tmp/mpv_current.log').read()
-    except:
-        playlist += 'something goes wrong'
-    return ('Current HQ Pentabot Playlist:\n' + playlist)
+    return mpv_cider.media_title()
+
+@botcmd
+@ignore_msg_from_self
+def zaubert_playlist(self, args):
+    """
+    show current bot mpv playlist
+    """
+    return mpv_zaubert.media_title()
 
 ### ### ###
 
