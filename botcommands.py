@@ -5,102 +5,78 @@ import feedparser
 import datetime
 import time
 import urllib
-import os
+import os, sys
 import json
 import requests
 import logging
 
 import socket
 import subprocess
-import os, sys
 
 from decorators import ignore_msg_from_self
 from pentabot import feed_help, config
 from gen_topic import get_topic
-from gen_kickreason import get_kickreason 
+from gen_kickreason import get_kickreason
 
 ### ### ###
 
-MPV_SOCKET = "/tmp/mpvsocket"
-CIDER = "cider.hq.c3d2.de"
 IS_PYTHON2 = sys.version_info < (3, 0)
+
 if IS_PYTHON2:
     QUIT_CMD = '{"command": ["quit"]}\n'
 else:
     QUIT_CMD = b'{"command": ["quit"]}\n'
 
-def stop_playback():
-    os.popen('pkill mpv')
-    if os.path.exists(MPV_SOCKET):
-        client = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
-        try:
-            client.connect(MPV_SOCKET)
-            client.send(QUIT_CMD)
-            client.close()
-        except socket.error as e:
-            return "already stopped or error while sending quit: %s" % e
-    else:
-        return "no mpv running"
+class Mpv:
+    def __init__(self, host):
+        self.host = host
+        self.socket_path = "/tmp/mpv-" + host
+        self.child = None
+    def play(self, uri):
+        self.stop()
+        cmd = ["mpv",
+                "--ao", "pulse:"+self.host,
+                "--no-config",
+                "--input-unix-socket="+self.socket_path,
+                "--", uri]
+        self.child = subprocess.Popen(cmd)
+    def stop(self):
+        if os.path.exists(self.socket_path):
+            client = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+            try:
+                client.connect(self.socket_path)
+                client.send(QUIT_CMD)
+                client.close()
+                if self.child != None:
+                    self.child.wait()
+            except socket.error as e:
+                return "already stopped or error while sending quit: %s" % e
+        else:
+            return "no mpv running"
 
-def playback(uri):
-    stop_playback()
-    subprocess.Popen(["mpv", "--ao", "pulse:"+CIDER, "--no-config", "--input-unix-socket="+MPV_SOCKET, "--", uri])
-
-if __name__ == "__main__":
-    playback("http://soundcloud.com/oliverschories/oliver-koletzki-b2b-oliver-schories-pleinvrees-utrecht-20-02-2015")
-    import time
-    time.sleep(10)
-    stop_playback()
-
+mpv_cider = Mpv("cider.hq.c3d2.de")
 
 @botcmd
 @ignore_msg_from_self
 def cider_play(self, mess, args):
-    return playback(args.strip())
+    return mpv_cider.play(args.strip())
 
 @botcmd
 @ignore_msg_from_self
 def cider_stop(self, mess, args):
-    return stop_playback()
+    return mpv_cider.stop()
 
-### ### ###
-
-### ### ###
-
-MPV_SOCKET_Z = "/tmp/mpvsocket_zaubert"
-ZAUBERT = "zaubert.hq.c3d2.de"
-IS_PYTHON2_Z = sys.version_info < (3, 0)
-if IS_PYTHON2_Z:
-    QUIT_CMD_Z = '{"command": ["quit"]}\n'
-else:
-    QUIT_CMD_Z = b'{"command": ["quit"]}\n'
-
-def stop_playback_z():
-    os.popen('pkill mpv')
-    if os.path.exists(MPV_SOCKET_Z):
-        client = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
-        try:
-            client.connect(MPV_SOCKET_Z)
-            client.send(QUIT_CMD_Z)
-            client.close()
-        except socket.error as e:
-            return "already stopped or error while sending quit: %s" % e
-    else:
-        return "no mpv running"
-
-def playback_z(uri):
-    stop_playback_z()
-    subprocess.Popen(["mpv", "--ao", "pulse:"+ZAUBERT, "--no-config", "--input-unix-socket="+MPV_SOCKET_Z, "--", uri])
+mpv_zaubert = Mpv("zaubert.hq.c3d2.de")
 
 @botcmd
 @ignore_msg_from_self
 def zaubert_play(self, mess, args):
-    return playback_z(args.strip())
+    return mpv_zaubert.play(args.strip())
 
 @botcmd
 @ignore_msg_from_self
 def zaubert_stop(self, mess, args):
-    return stop_playback_z()
+    return mpv_zaubert.stop()
 
 ### ### ###
 
@@ -121,7 +97,7 @@ def playlist(self, mess, args):
 ### ### ###
 
 def format_help(fun):
-    fun.__doc__ = fun.__doc__.format(**feed_help) #** dict entpacken, * listen entpacken 
+    fun.__doc__ = fun.__doc__.format(**feed_help) #** dict entpacken, * listen entpacken
     return fun
 
 def _stroflatlog_de(latitude, longitude):
@@ -232,7 +208,7 @@ def ping6flatbert(self, mess, args):
     """
     Zeige Informationen ueber den Server - flatbert.hq.c3d2.de
     """
-    ping6flatbert = ''  
+    ping6flatbert = ''
     try:
         ping6flatbert += os.popen('/sbin/ping6 -c4 flatbert.hq.c3d2.de  | /usr/bin/tail -2').read()
     except:
@@ -323,7 +299,7 @@ def flatbert(self, mess, args):
     """
     Server Test
     """
-    flatbert = ''   
+    flatbert = ''
     try:
         flatbert += os.popen('/home/freebot/pentabot/shell/hq-check-flatbert.sh').read()
     except:
@@ -448,7 +424,7 @@ def fortune(self, mess, args):
 def cowgedichte(self, mess, args):
     """
     cowGedichte Cookie for you
-    
+
     A Cookie you can trust and accept.
     Just run cowgedichte
     """
@@ -474,9 +450,6 @@ def cowfortune(self, mess, args):
     except:
         cowfortune += 'Your cowfortune unforseeable'
     return ('Your Cookie reads:\n' + cowfortune)
-
-
-
 
 @botcmd
 @ignore_msg_from_self
@@ -517,7 +490,7 @@ def last(self, mess, args):
         message = 'Bitte rufe \"help last\" fuer moegliche Optionen auf!'
     return message
 
-@format_help  
+@format_help
 @botcmd
 @ignore_msg_from_self
 def mensa(self, mess, args):
@@ -872,7 +845,7 @@ def serverportupgradelog(self, mess, args):
 
 @botcmd
 @ignore_msg_from_self
-def lebst_du(self, mess, args):  
+def lebst_du(self, mess, args):
     """
     :D
     """
@@ -892,7 +865,7 @@ def cloudstorage(self, mess, args):
     cloudstorage = ''
     try:
         cloudstorage += os.popen("/home/pentabot/shell/df.sh").read()
-         
+
     except:
         cloudstorage += 'Sorry Dude'
     return ('Ihnen steht noch folgender Speicherplatz im Utha NSA-Rechenzentrum zur Verfuegung\n' + cloudstorage)
