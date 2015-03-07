@@ -17,7 +17,7 @@ import os, sys
 from decorators import ignore_msg_from_self
 from pentabot import feed_help, config
 from gen_topic import get_topic
-from gen_kickreason import get_kickreason 
+from gen_kickreason import get_kickreason
 
 ### ### ###
 
@@ -121,7 +121,7 @@ def playlist(self, mess, args):
 ### ### ###
 
 def format_help(fun):
-    fun.__doc__ = fun.__doc__.format(**feed_help) #** dict entpacken, * listen entpacken 
+    fun.__doc__ = fun.__doc__.format(**feed_help) #** dict entpacken, * listen entpacken
     return fun
 
 def _stroflatlog_de(latitude, longitude):
@@ -232,7 +232,7 @@ def ping6flatbert(self, mess, args):
     """
     Zeige Informationen ueber den Server - flatbert.hq.c3d2.de
     """
-    ping6flatbert = ''  
+    ping6flatbert = ''
     try:
         ping6flatbert += os.popen('/sbin/ping6 -c4 flatbert.hq.c3d2.de  | /usr/bin/tail -2').read()
     except:
@@ -323,7 +323,7 @@ def flatbert(self, mess, args):
     """
     Server Test
     """
-    flatbert = ''   
+    flatbert = ''
     try:
         flatbert += os.popen('/home/freebot/pentabot/shell/hq-check-flatbert.sh').read()
     except:
@@ -448,7 +448,7 @@ def fortune(self, mess, args):
 def cowgedichte(self, mess, args):
     """
     cowGedichte Cookie for you
-    
+
     A Cookie you can trust and accept.
     Just run cowgedichte
     """
@@ -474,9 +474,6 @@ def cowfortune(self, mess, args):
     except:
         cowfortune += 'Your cowfortune unforseeable'
     return ('Your Cookie reads:\n' + cowfortune)
-
-
-
 
 @botcmd
 @ignore_msg_from_self
@@ -517,7 +514,7 @@ def last(self, mess, args):
         message = 'Bitte rufe \"help last\" fuer moegliche Optionen auf!'
     return message
 
-@format_help  
+@format_help
 @botcmd
 @ignore_msg_from_self
 def mensa(self, mess, args):
@@ -872,7 +869,7 @@ def serverportupgradelog(self, mess, args):
 
 @botcmd
 @ignore_msg_from_self
-def lebst_du(self, mess, args):  
+def lebst_du(self, mess, args):
     """
     :D
     """
@@ -892,7 +889,7 @@ def cloudstorage(self, mess, args):
     cloudstorage = ''
     try:
         cloudstorage += os.popen("/home/pentabot/shell/df.sh").read()
-         
+
     except:
         cloudstorage += 'Sorry Dude'
     return ('Ihnen steht noch folgender Speicherplatz im Utha NSA-Rechenzentrum zur Verfuegung\n' + cloudstorage)
