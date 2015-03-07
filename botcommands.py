@@ -9,10 +9,116 @@ import os
 import json
 import requests
 import logging
+
+import socket
+import subprocess
+import os, sys
+
 from decorators import ignore_msg_from_self
 from pentabot import feed_help, config
 from gen_topic import get_topic
 from gen_kickreason import get_kickreason 
+
+### ### ###
+
+MPV_SOCKET = "/tmp/mpvsocket"
+CIDER = "cider.hq.c3d2.de"
+IS_PYTHON2 = sys.version_info < (3, 0)
+if IS_PYTHON2:
+    QUIT_CMD = '{"command": ["quit"]}\n'
+else:
+    QUIT_CMD = b'{"command": ["quit"]}\n'
+
+def stop_playback():
+    os.popen('pkill mpv')
+    if os.path.exists(MPV_SOCKET):
+        client = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+        try:
+            client.connect(MPV_SOCKET)
+            client.send(QUIT_CMD)
+            client.close()
+        except socket.error as e:
+            return "already stopped or error while sending quit: %s" % e
+    else:
+        return "no mpv running"
+
+def playback(uri):
+    stop_playback()
+    subprocess.Popen(["mpv", "--ao", "pulse:"+CIDER, "--no-config", "--input-unix-socket="+MPV_SOCKET, "--", uri])
+
+if __name__ == "__main__":
+    playback("http://soundcloud.com/oliverschories/oliver-koletzki-b2b-oliver-schories-pleinvrees-utrecht-20-02-2015")
+    import time
+    time.sleep(10)
+    stop_playback()
+
+
+@botcmd
+@ignore_msg_from_self
+def cider_play(self, mess, args):
+    return playback(args.strip())
+
+@botcmd
+@ignore_msg_from_self
+def cider_stop(self, mess, args):
+    return stop_playback()
+
+### ### ###
+
+### ### ###
+
+MPV_SOCKET_Z = "/tmp/mpvsocket_zaubert"
+ZAUBERT = "zaubert.hq.c3d2.de"
+IS_PYTHON2_Z = sys.version_info < (3, 0)
+if IS_PYTHON2_Z:
+    QUIT_CMD_Z = '{"command": ["quit"]}\n'
+else:
+    QUIT_CMD_Z = b'{"command": ["quit"]}\n'
+
+def stop_playback_z():
+    os.popen('pkill mpv')
+    if os.path.exists(MPV_SOCKET_Z):
+        client = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+        try:
+            client.connect(MPV_SOCKET_Z)
+            client.send(QUIT_CMD_Z)
+            client.close()
+        except socket.error as e:
+            return "already stopped or error while sending quit: %s" % e
+    else:
+        return "no mpv running"
+
+def playback_z(uri):
+    stop_playback_z()
+    subprocess.Popen(["mpv", "--ao", "pulse:"+ZAUBERT, "--no-config", "--input-unix-socket="+MPV_SOCKET_Z, "--", uri])
+
+@botcmd
+@ignore_msg_from_self
+def zaubert_play(self, mess, args):
+    return playback_z(args.strip())
+
+@botcmd
+@ignore_msg_from_self
+def zaubert_stop(self, mess, args):
+    return stop_playback_z()
+
+### ### ###
+
+@botcmd
+@ignore_msg_from_self
+def playlist(self, mess, args):
+    """
+    show current bot mpv playlist
+    """
+    playlist = ''
+    try:
+        playlist += os.popen('/home/pentabot/shell/mpv_current.sh').read()
+        playlist += os.popen('/bin/cat /tmp/mpv_current.log').read()
+    except:
+        playlist += 'something goes wrong'
+    return ('Current HQ Pentabot Playlist:\n' + playlist)
+
+### ### ###
 
 def format_help(fun):
     fun.__doc__ = fun.__doc__.format(**feed_help) #** dict entpacken, * listen entpacken 
@@ -100,12 +206,12 @@ def serverinfo(self, mess, args):
     """
     serverinfo = ''
     try:
-        serverinfo += os.popen('/usr/bin/uname -i -m -r -s -o -n').read()
+        serverinfo += os.popen('/bin/uname -a').read()
         serverinfo += os.popen('/usr/bin/uptime').read()
-        serverinfo += os.popen('/usr/bin/top | /usr/bin/grep "Mem"').read()
+        serverinfo += os.popen('ps -eo pid,comm,lstart,etime,time,args | grep pentabot | egrep -v "ps|grep|ssh|sendmail"').read()
     except:
         serverinfo += 'Sorry Dude'
-    return ('Info:\n' + serverinfo)
+    return ('Info: (auf flatbert)\n' + serverinfo)
 
 @botcmd
 @ignore_msg_from_self
@@ -294,6 +400,16 @@ def weihnachtsgedichte(self, mess, args):
     except:
         weihnachtsgedichte += 'Your weihnachtsgedichte unforseeable'
     return ('Your Cookie reads:\n' + weihnachtsgedichte)
+
+
+@botcmd
+@ignore_msg_from_self
+def dn42(self, mess, args):
+    """
+    dn42 address space
+    """
+    return 'http://172.22.99.76:8000/index.html'
+
 
 @botcmd
 @ignore_msg_from_self
@@ -637,7 +753,7 @@ def serverprozesse(self, mess, args):
     """
     serverprozesse = ''
     try:
-        serverprozesse += os.popen('/bin/ps -xuvwc').read()
+        serverprozesse += os.popen('/bin/ps -vwc').read()
     except:
         serverprozesse += 'Sorry Dude'
     return ('Info:\n' + serverprozesse)
@@ -775,12 +891,11 @@ def cloudstorage(self, mess, args):
     """
     cloudstorage = ''
     try:
-#        cloudstorage += os.popen("echo 'Ihnen stehen noch $(df -m | awk '{print $2}' | tail -1) Speicher im Utha NSA-Rechenzentrum zur Verfügung'").read()
-        cloudstorage += os.popen("echo 'Ihnen stehen noch 10 TB Speicher im Utha NSA-Rechenzentrum zur Verfügung'").read()
+        cloudstorage += os.popen("/home/pentabot/shell/df.sh").read()
          
     except:
         cloudstorage += 'Sorry Dude'
-    return ('Info:\n' + cloudstorage)
+    return ('Ihnen steht noch folgender Speicherplatz im Utha NSA-Rechenzentrum zur Verfuegung\n' + cloudstorage)
 
 ### ### ###
 
@@ -792,7 +907,7 @@ def test_spaceapi(self, mess, args):
     """
     test_spaceapi = ''
     try:
-        test_spaceapi += os.popen("/usr/local/bin/curl -m3 -I http://www.hq.c3d2.de/spaceapi.json 2>&1 | grep 'HTTP/'").read()
+        test_spaceapi += os.popen("/usr/bin/curl -m3 -I http://www.hq.c3d2.de/spaceapi.json 2>&1 | grep 'HTTP/'").read()
     except:
         test_spaceapi += 'Sorry Dude'
     return ('Info:\n' + test_spaceapi)

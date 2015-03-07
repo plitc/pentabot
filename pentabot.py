@@ -33,6 +33,8 @@ class pentaBot(JabberBot):
     It shall server you at your fingertips. And you shall serve him. With News for pentaradio.
     For more info: http://github.com/koeart/pentabot
     koeart <at remove this> zwoelfelf <this as well> <net>
+    
+    Don't Abuse Me! Channel for Testing: bot@chat.c3d2.de
     """
 
     def __init__( self, jid, password, res = None, debug=False, command_prefix=''):
