@@ -75,7 +75,6 @@ class Mpv:
             return "no mpv running"
     def stop(self):
         if os.path.exists(self.socket_path):
-            client = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
             try:
                 client = self.connect()
                 client.send(QUIT_CMD)
@@ -115,7 +114,7 @@ def zaubert_stop(self, mess, args):
 
 @botcmd
 @ignore_msg_from_self
-def cider_playlist(self, args):
+def cider_playlist(self, message, args):
     """
     show current bot mpv playlist
     """
@@ -123,7 +122,7 @@ def cider_playlist(self, args):
 
 @botcmd
 @ignore_msg_from_self
-def zaubert_playlist(self, args):
+def zaubert_playlist(self, message, args):
     """
     show current bot mpv playlist
     """
