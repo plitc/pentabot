@@ -74,13 +74,15 @@ class Mpv:
         else:
             return "no mpv running"
     def stop(self):
+        if self.child != None:
+            self.child.kill()
+            self.child.wait()
+            self.child = None
         if os.path.exists(self.socket_path):
             try:
                 client = self.connect()
                 client.send(QUIT_CMD)
                 client.close()
-                if self.child != None:
-                    self.child.wait()
             except socket.error as e:
                 return "already stopped or error while sending quit: %s" % e
         else:
