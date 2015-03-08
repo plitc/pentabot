@@ -86,6 +86,11 @@ class Mpv:
                 client.close()
             except socket.error as e:
                 return "already stopped or error while sending quit: %s" % e
+            finally:
+                try:
+                    os.remove(self.socket_path)
+                except OSError:
+                    pass
         else:
             return "no mpv running"
 
