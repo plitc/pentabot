@@ -47,11 +47,12 @@ class Mpv:
     def connect(self):
         client = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
         client.connect(self.socket_path)
-        fcntl.fcntl(client, fcntl.F_SETFL, os.O_NONBLOCK)
         return client
     def flush_socket(self, sock):
         try:
+            fcntl.fcntl(sock, fcntl.F_SETFL, os.O_NONBLOCK)
             sock.recv(4096)
+            fcntl.fcntl(sock, fcntl.F_SETFL, 0)
         except socket.error as e:
             if e != errno.EAGAIN or e != errno.EWOULDBLOCK:
                 return "Connection failed while retrieving current song: %s" % e
