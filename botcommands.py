@@ -138,6 +138,22 @@ def zaubert_playlist(self, message, args):
 
 ### ### ###
 
+@botcmd
+@ignore_msg_from_self
+def playlist(self, mess, args):
+    """
+    show current bot mpv playlist
+    """
+    playlist = ''
+    try:
+        playlist += os.popen('/home/pentabot/shell/mpv_current.sh').read()
+        playlist += os.popen('/bin/cat /tmp/mpv_current.log').read()
+    except:
+        playlist += 'something goes wrong'
+    return ('Current HQ Pentabot Playlist:\n' + playlist)
+
+### ### ###
+
 def format_help(fun):
     fun.__doc__ = fun.__doc__.format(**feed_help) #** dict entpacken, * listen entpacken
     return fun
@@ -926,6 +942,23 @@ def test_spaceapi(self, mess, args):
     except:
         test_spaceapi += 'Sorry Dude'
     return ('Info:\n' + test_spaceapi)
+
+
+### ### ### ### ### ### ### ### ###
+
+@botcmd
+@ignore_msg_from_self
+def check_wetu(self, mess, args):
+    """
+    Wetu Server Test
+    """
+    check_wetu = ''
+    try:
+        check_wetu += os.popen('/home/pentabot/shell/check_wetu.sh').read()
+        check_wetu += os.popen('/bin/cat /tmp/pentabot_check_wetu1.log').read()
+    except:
+        check_wetu += 'Sorry Dude'
+    return ('' + check_wetu)
 
 ### ### ### PLITC ### ### ###
 # EOF
