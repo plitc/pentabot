@@ -955,7 +955,7 @@ def check_wetu(self, mess, args):
     check_wetu = ''
     try:
         check_wetu += os.popen('/home/pentabot/shell/check_wetu.sh').read()
-        check_wetu += os.popen('/bin/cat /tmp/pentabot_check_wetu1.log').read()
+        check_wetu += os.popen('/bin/cat /tmp/pentabot_check_wetu2.log').read()
     except:
         check_wetu += 'Sorry Dude'
     return ('' + check_wetu)

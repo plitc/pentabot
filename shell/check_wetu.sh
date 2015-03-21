@@ -3,6 +3,7 @@
 
 TMPFILE=/tmp/pentabot_check_wetu.log
 TMPFILE1=/tmp/pentabot_check_wetu1.log
+TMPFILE2=/tmp/pentabot_check_wetu2.log
 
 # check - dns: ns.c3d2.de
 DNS=$(nc -vz -w 2 -t ns.c3d2.de 53 2>&1 > /dev/null | grep -c "succeeded")
@@ -68,7 +69,16 @@ else
    echo "Jabber=FAILED" >> "$TMPFILE"
 fi
 
-cat "$TMPFILE" | tr "\n" " " > "$TMPFILE1"
+### ### ### ### ### ### ### ### ###
+
+grep "FAILED" "$TMPFILE" > "$TMPFILE1"
+
+cat "$TMPFILE1" | tr "\n" " " > "$TMPFILE2"
+
+CHECKTMPFILE2=$(cat /tmp/pentabot_check_wetu2.log)
+if [ -z "$CHECKTMPFILE2" ]; then
+   echo "WETU health status = OK" > /tmp/pentabot_check_wetu2.log
+fi
 
 ### ### ### C3D2 ### ### ###
 # EOF
